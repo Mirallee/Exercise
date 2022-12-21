@@ -4,8 +4,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -35,6 +33,9 @@ public class BaseTest {
 
         if (browserName.contains("chrome")) {
             ChromeOptions options = new ChromeOptions();
+            options.addArguments("start-maximized");
+            options.addArguments("disable-infobars");
+            options.addArguments("--disable-extensions");
             WebDriverManager.chromedriver().setup();
             if (browserName.contains("headless")) {
                 options.addArguments("headless");
@@ -42,15 +43,11 @@ public class BaseTest {
             driver = new ChromeDriver(options);
         } else if (browserName.equalsIgnoreCase("firefox")) {
             WebDriverManager.firefoxdriver().setup();
-            WebDriver driver = new FirefoxDriver();
+            driver = new FirefoxDriver();
         } else if (browserName.equalsIgnoreCase("edge")) {
             WebDriverManager.edgedriver().setup();
-            WebDriver driver = new EdgeDriver();
+            driver = new EdgeDriver();
         }
-        ChromeOptions optionss = new ChromeOptions();
-        optionss.addArguments("start-maximized");
-        optionss.addArguments("disable-infobars");
-        optionss.addArguments("--disable-extensions");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
         return driver;
@@ -64,19 +61,12 @@ public class BaseTest {
         });
         return data;
     }
-
-    public String getScreenshot(String testCaseName, WebDriver driver) throws IOException {
-        TakesScreenshot ts = (TakesScreenshot) driver;
-        File source = ts.getScreenshotAs(OutputType.FILE);
-        File file = new File(System.getProperty("user.dir") + "//reports//" + testCaseName + ".png");
-        FileUtils.copyFile(source, file);
-        return System.getProperty("user.dir") + "//reports//" + testCaseName + ".png";
-    }
     @BeforeMethod(alwaysRun = true)
     public ContactPage launchApplication() throws IOException {
         WebDriver driver = initializeDriver();
         contactPage = new ContactPage(driver);
         contactPage.goTo();
+        contactPage.clickCookiesButton();
         return contactPage;
     }
 
