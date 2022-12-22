@@ -1,12 +1,12 @@
-package testcomponents;
+package utilities;
 
-import resources.ExtentReporterNG;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import pages.BaseTest;
 
 public class Listeners extends BaseTest implements ITestListener {
     ExtentTest test;

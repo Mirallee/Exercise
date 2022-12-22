@@ -2,12 +2,12 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite parallel="tests" name="All Test Suite">
     <listeners>
-        <listener class-name="testcomponents.Listeners"/>
+        <listener class-name="utilities.Listeners"/>
     </listeners>
 
-    <test thread-count="5" name="Submit Order Test">
+    <test thread-count="5" name="Submit Form Test">
         <classes>
-            <class name="tests.SubmitForm"/>
+            <class name="tests.SubmitFormTest"/>
         </classes>
     </test>
 </suite>

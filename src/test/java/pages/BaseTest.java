@@ -1,4 +1,4 @@
-package testcomponents;
+package pages;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,9 +9,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import pageobjects.ContactPage;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -49,7 +48,6 @@ public class BaseTest {
             driver = new EdgeDriver();
         }
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().window().maximize();
         return driver;
     }
 
@@ -61,7 +59,7 @@ public class BaseTest {
         });
         return data;
     }
-    @BeforeMethod(alwaysRun = true)
+    @BeforeClass(alwaysRun = true)
     public ContactPage launchApplication() throws IOException {
         WebDriver driver = initializeDriver();
         contactPage = new ContactPage(driver);
@@ -70,7 +68,7 @@ public class BaseTest {
         return contactPage;
     }
 
-    @AfterMethod(alwaysRun = true)
+    @AfterClass(alwaysRun = true)
     public void tearDown() {
         driver.close();
     }

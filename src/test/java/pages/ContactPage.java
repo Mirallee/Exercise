@@ -1,10 +1,8 @@
-package pageobjects;
+package pages;
 
-import abstractcomponents.AbstractComponents;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -49,8 +47,6 @@ public class ContactPage extends AbstractComponents {
 
     public void goTo() {
         driver.get("https://sourceful.nl/nl/contact-pl/");
-        Actions actions = new Actions(driver);
-        actions.moveToElement(sendButton);
     }
 
     public void waitForReCaptcha() {
@@ -58,11 +54,12 @@ public class ContactPage extends AbstractComponents {
         new WebDriverWait(driver, Duration.ofSeconds(20)).until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.recaptcha-checkbox-border"))).click();
         driver.switchTo().defaultContent();
     }
-    public void sendForm() throws InterruptedException {
+
+    public void sendForm() {
         sendButton.click();
-        Thread.sleep(3000);
     }
-    public String verifyMessageIsDisplayed(){
+
+    public String verifyMessageIsDisplayed() {
         return message.getText();
     }
 }
